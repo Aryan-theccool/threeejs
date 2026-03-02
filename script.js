@@ -18,8 +18,8 @@ const renderer = new THREE.WebGLRenderer({ canvas: canvas });
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 // Geometry - Sphere
-const geometry = new THREE.SphereGeometry( 1, 32, 16 );
-const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+const geometry = new THREE.SphereGeometry( 1, 3*4, 16 ,100,10,true);
+const material = new THREE.MeshBasicMaterial( { color: 0xffff00, wireframe: true } );
 const sphere = new THREE.Mesh( geometry, material );
 scene.add( sphere );
 
