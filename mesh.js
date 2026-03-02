@@ -17,6 +17,23 @@ const canvas = document.querySelector('canvas');
 const renderer = new THREE.WebGLRenderer({ canvas: canvas });
 renderer.setSize(window.innerWidth, window.innerHeight);
 
+// Texture Loader
+const textureLoader = new THREE.TextureLoader();
+
+// Load PBR Textures
+const colorMap = textureLoader.load('paper_0025_color_1k.jpg');
+const normalMap = textureLoader.load('paper_0025_normal_opengl_1k.png');
+const roughnessMap = textureLoader.load('paper_0025_roughness_1k.jpg');
+const aoMap = textureLoader.load('paper_0025_ao_1k.jpg');
+const heightMap = textureLoader.load('paper_0025_height_1k.png');
+
+// Set texture repeat and wrapping
+[colorMap, normalMap, roughnessMap, aoMap, heightMap].forEach(texture => {
+  texture.wrapS = THREE.RepeatWrapping;
+  texture.wrapT = THREE.RepeatWrapping;
+  texture.repeat.set(1, 1);
+});
+
 // Studio Lighting Setup
 // Key Light - Main directional light
 const keyLight = new THREE.DirectionalLight(0xffffff, 1.2);
@@ -57,10 +74,20 @@ scene.add(fillLightHelper);
 const rimLightHelper = new THREE.DirectionalLightHelper(rimLight, 2);
 scene.add(rimLightHelper);
 
-// Geometry - Sphere
+// Geometry - Cardboard Box
 const geometry = new THREE.BoxGeometry( 2, 2, 2 );
-const material = new THREE.MeshStandardMaterial( { color: "red", roughness: 0.5, metalness: 0.9 } );
+const material = new THREE.MeshStandardMaterial( { 
+  map: colorMap,
+  normalMap: normalMap,
+  roughnessMap: roughnessMap,
+  aoMap: aoMap,
+  metalness: 0.0,
+  roughness: 0.8,
+  color: 0xcccccc // Fallback color
+} );
 const sphere = new THREE.Mesh( geometry, material );
+sphere.castShadow = true;
+sphere.receiveShadow = true;
 scene.add( sphere );
 
 window.addEventListener('resize', () => {
