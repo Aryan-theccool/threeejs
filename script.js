@@ -55,6 +55,7 @@ window.addEventListener('resize', () => {
 });
 // Animation loop
 const controls = new OrbitControls( camera, renderer.domElement );
+controls.enableDamping = true;
 function animate() {
   requestAnimationFrame(animate);
   mesh.rotation.x += 0.01;
