@@ -44,9 +44,22 @@ scene.add(rimLight);
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
 scene.add(ambientLight);
 
+// Light Helpers
+const keyLightHelper = new THREE.DirectionalLightHelper(keyLight, 2);
+scene.add(keyLightHelper);
+
+const highIntensityLightHelper = new THREE.DirectionalLightHelper(highIntensityLight, 3);
+scene.add(highIntensityLightHelper);
+
+const fillLightHelper = new THREE.DirectionalLightHelper(fillLight, 1.5);
+scene.add(fillLightHelper);
+
+const rimLightHelper = new THREE.DirectionalLightHelper(rimLight, 2);
+scene.add(rimLightHelper);
+
 // Geometry - Sphere
 const geometry = new THREE.BoxGeometry( 2, 2, 2 );
-const material = new THREE.MeshStandardMaterial( { color: "red" } );
+const material = new THREE.MeshStandardMaterial( { color: "red", roughness: 0.5, metalness: 0.9 } );
 const sphere = new THREE.Mesh( geometry, material );
 scene.add( sphere );
 
